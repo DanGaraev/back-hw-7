@@ -1,0 +1,42 @@
+1) Вывести все книги, существующие в библиотеке
+Book.objects.all()
+Вывод: <QuerySet [<Book: Kuda idti rabotat>, <Book: Davaite dumaite podskazyvaite>, <Book: Ooooh my god>]>
+
+2)Найти в ДБ книгу 'Ooooh my god' без учёта регистра
+Book.objects.filter(title__iexact='ooooh my god')
+Вывод: <QuerySet [<Book: Ooooh my god>]>
+
+3)Найти все книги, созданные после 2023-05-03
+Book.objects.filter(created_at__gte='2023-05-03')
+Вывод: <QuerySet [<Book: Kuda idti rabotat>, <Book: Davaite dumaite podskazyvaite>, <Book: Ooooh my god>]>
+
+4)Вывести все жанры книги 'Ooooh my god'
+Book.objects.get(title='Ooooh my god').genre.all()
+Вывод: <QuerySet [<Genre: Hihanki-Hahanki>, <Genre: Smeshnilka>, <Genre: Tragediya>]>
+
+5)Добавить книге 'Ooooh my god' жанр под id=1
+Book.objects.get(title='Ooooh my god').genre.add(1)
+Book.objects.get(title='Ooooh my god').genre.all()
+Вывод: <QuerySet [<Genre: Hihanki-Hahanki>, <Genre: Smeshnilka>, <Genre: Strashilka>, <Genre: Tragediya>]>
+
+6) Вывести все книги, название которых не содержит 'da'
+Book.objects.exclude(title__contains='da')
+Вывод: <QuerySet [<Book: Ooooh my god>]>
+
+7) Вывести даты создания всех книг
+Book.objects.values('created_at')
+Вывод: <QuerySet [{'created_at': datetime.datetime(2023, 5, 3, 23, 33, 6, 63221, tzinfo=datetime.timezone.utc)}, {
+'created_at': datetime.datetime(2023, 5, 3, 23, 31, 12, 914717, tzinfo=datetime.timezone.utc)}, {'created_a
+t': datetime.datetime(2023, 5, 3, 23, 29, 31, 684039, tzinfo=datetime.timezone.utc)}]>
+
+8) Вывести все книги в обратном порядке
+Book.objects.order_by('-title')
+Вывод: <QuerySet [<Book: Ooooh my god>, <Book: Kuda idti rabotat>, <Book: Davaite dumaite podskazyvaite>]>
+
+9) Вычислить количество жанров у одной книги
+Book.objects.get(title='Ooooh my god').genre.all().count()
+Вывод: 4
+
+10) Вывести существует ли книга со словом 'Tuda' в названии
+Book.objects.filter(title__contains='Tuda').exists()
+Вывод: False
